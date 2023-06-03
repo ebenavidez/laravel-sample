@@ -36,4 +36,9 @@ return [
         'key' => env('OPEN_WEATHER_MAP_KEY'),
     ],
 
+    'foursquare' => [
+        'url' => env('FOURSQUARE_URL'),
+        'key' => env('FOURSQUARE_ID'),
+    ],
+
 ];

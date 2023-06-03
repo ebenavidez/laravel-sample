@@ -4,7 +4,9 @@ namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
 use App\Interfaces\WeatherInterface;
+use App\Interfaces\VenueInterface;
 use App\Services\Weather\WeatherService;
+use App\Services\Venue\VenueService;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -16,6 +18,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public $bindings = [
         WeatherInterface::class => WeatherService::class,
+        VenueInterface::class => VenueService::class,
     ];
 
     /**
