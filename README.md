@@ -1,66 +1,69 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+## About This Project
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+This is a simple implementation of API using Laravel 10.
 
-## About Laravel
+It uses Open Weather Map's API (https://openweathermap.org/)
+to access current weather and weater forecast for a particular
+location.
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+It also uses FourSquare's v3 API (https://foursquare.com/)
+to search for venues in a particular area.
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+It tries to apply the SOLID design principles while also
+trying to stay withing the design principle of Laravel.
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+In the .env file, I added the values for URLs and keys. 
+These values is used in \config\services.php. The config values
+are used within the service implemention in the code.
+I normally do not all the .env file in repositories for security.
+I believe that each member of the team should have their own .env
+files where sensitive information written both personal for testing
+and for a team that has more junior members.
 
-## Learning Laravel
+In the Controllers VenueController and WeatherController, 
+VenueInterface and WeatherInterface interfaces were injected.
+You can see the bindings in the AppServiceProvider class.
+Using this approach, it will be easier to swap services in the
+future. Let's say, when we choose to transfer resource APIs, 
+we can just create a new class that implements one of these interfaces.
+The changes to the code will be minimal compared to not implementing
+interfaces at all. Minimal code changes and loose coupling ensures
+that the code will have lesser bugs and easier to maintain in the long run.
+Also in my experience with testing, using interfaces makes it easier to test 
+components.
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+Inside the app\Services directory, I added the 3rd party API requests.
+I added subfolders to make the code neater and easier to understand.
+Inside each subfolder, I also added a DTO (Data Transfer Object) folder
+wherein I stored DTO files to be used in retrieving data from the APIs.
+Each object inside implements the DtoInterface which requires the implementing
+classes to have a set of data manipulation methods. 
+I believe that data restructuring should happen inside these classes.
+Each DTO object also extends a baseDTO class. This is used so that the
+interfaces doesn't need to know the specific class name of the DTO
+that it should return. This supports
+the Interface design mentioned about the controllers.
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+I also used a trait (HttpRequest.php) for code reuse.
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 2000 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+## Installation
 
-## Laravel Sponsors
+You can either download the zip version or clone the code from
+the repository.
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+Run "composer install" in the same directory using terminal to
+get the vendor folder as it is not included in the repository.
 
-### Premium Partners
+This project is using Laravel's Sail. 
+You will need to install Docker in your machine.
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[OP.GG](https://op.gg)**
-- **[WebReinvent](https://webreinvent.com/?utm_source=laravel&utm_medium=github&utm_campaign=patreon-sponsors)**
-- **[Lendio](https://lendio.com)**
+You can use "./vendor/bin/sail up" on the terminal to start 
+this project on your local machine.
 
-## Contributing
+You can use "./vendor/bin/sail down" to stop the project.
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+## About This Repository
 
-## Code of Conduct
+I implemented a simpler git flow for this project using
+a branch for each feature that were merged directly into the main branch.
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
